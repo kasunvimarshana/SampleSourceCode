@@ -1,0 +1,14 @@
+{
+  "AppNav": {
+    "description": "Auto imported from /components/AppNav.vue"
+  },
+  "LazyAppNav": {
+    "description": "Auto imported from /components/AppNav.vue"
+  },
+  "Logo": {
+    "description": "Auto imported from /components/Logo.vue"
+  },
+  "LazyLogo": {
+    "description": "Auto imported from /components/Logo.vue"
+  }
+}

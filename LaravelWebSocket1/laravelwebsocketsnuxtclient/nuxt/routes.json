@@ -1,0 +1,23 @@
+[
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "/Users/alexgarrettsmith/Code/laravelwebsocketsnuxtclient/pages/login.vue",
+    "chunkName": "pages/login",
+    "_name": "_dc5f8d1e"
+  },
+  {
+    "name": "orders-id",
+    "path": "/orders/:id?",
+    "component": "/Users/alexgarrettsmith/Code/laravelwebsocketsnuxtclient/pages/orders/_id.vue",
+    "chunkName": "pages/orders/_id",
+    "_name": "_d6ffb790"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/alexgarrettsmith/Code/laravelwebsocketsnuxtclient/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_6faed34c"
+  }
+]
