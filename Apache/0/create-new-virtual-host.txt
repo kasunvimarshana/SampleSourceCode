@@ -1,0 +1,53 @@
+sudo mkdir -p /var/www/testbed/public
+sudo -s mkdir -p /var/www/testbed/public
+
+sudo mkdir -p /var/www/testbed/log
+sudo -s mkdir -p /var/www/testbed/log
+
+sudo chown -R $USER:$USER /var/www/testbed
+sudo -s chown -R $USER:$USER /var/www/testbed
+
+sudo chmod -R 755 /var/www/testbed
+sudo -s chmod -R 755 /var/www/testbed
+
+* create html
+sudo nano /var/www/testbed/public/index.html
+sudo -s nano /var/www/testbed/public/index.html
+
+<html>
+<head>
+<title>My Simple App</title>
+</head>
+<body>
+ <h1> Welcome to Apache</h1>
+ <p>This is a simple HTML page</p>
+</body>
+</html>
+
+* config
+sudo nano /etc/apache2/sites-available/testbed.conf
+sudo -s nano /etc/apache2/sites-available/testbed.conf
+
+<VirtualHost *:80>
+    ServerAdmin ilmudata@localhost
+    ServerName testbed01
+    ServerAlias testbed01.southeastasia.cloudapp.azure.com
+    DocumentRoot /var/www/testbed/public
+    ErrorLog /var/www/testbed/log/error.log
+    CustomLog /var/www/testbed/log/access.log combined
+</VirtualHost>
+
+* config
+cd /etc/apache2/sites-available/
+sudo a2ensite testbed.conf
+sudo a2dissite 000-default.conf
+* test
+sudo apache2ctl configtest
+
+* reload
+sudo systemctl reload apache2
+sudo -s systemctl reload apache2
+
+* restart
+sudo systemctl restart apache2
+sudo -s systemctl restart apache2

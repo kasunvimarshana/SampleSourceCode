@@ -1,0 +1,173 @@
+Deploy ASP.NET Core 5.0
+1. set up .net core 5.0
+2. enable apache modules
+3. creating virtual host
+4. create ASP.NET Core project
+5. configure virtual host
+6. Creating service for ASP.NET Core
+7. Testing
+
+====================================
+
+1. set up .net core 5.0
+wget https://packages.microsoft.com/config/ubuntu/20.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+
+sudo dpkg -i packages-microsoft-prod.deb
+sudo -s dpkg -i packages-microsoft-prod.deb
+
+*install SDK or runtime
+sudo apt-get update; \
+  sudo apt-get install -y apt-transport-https && \
+  sudo apt-get update && \
+  sudo apt-get install -y dotnet-sdk-5.0
+
+sudo -s apt-get update; \
+  sudo apt-get install -y apt-transport-https && \
+  sudo apt-get update && \
+  sudo apt-get install -y dotnet-sdk-5.0
+
+** runtime - .net core 5
+sudo apt-get update; \
+  sudo apt-get install -y apt-transport-https && \
+  sudo apt-get update && \
+  sudo apt-get install -y aspnetcore-runtime-5.0
+
+** check version
+dotnet --version
+
+-------------------------------------
+
+2. enable apache modules
+sudo a2enmod rewrite
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod headers
+sudo a2enmod ssl
+
+* restart
+sudo service apache2 restart
+
+-------------------------------------
+
+** 3. creating virtual host
+sudo mkdir -p /var/www/testdotnet/public
+sudo -s mkdir -p /var/www/testdotnet/public
+
+sudo mkdir -p /var/www/testdotnet/log
+sudo -s mkdir -p /var/www/testdotnet/log
+
+sudo chown -R $USER:$USER /var/www/testdotnet
+sudo -s chown -R $USER:$USER /var/www/testdotnet
+
+sudo chmod -R 755 /var/www/testdotnet
+sudo -s chmod -R 755 /var/www/testdotnet
+
+
+-------------------------------------
+
+4. create project
+dotnet new -l
+
+mkdir myapp
+cd myappl
+dotnet new mvc -au None
+
+** change codes
+nano Startup.cs
+
+-----------------------
+// using Microsoft.AspNetCore.HttpOverrides;
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+-------------------
+
+
+** build 
+dotnet build
+
+** publish release
+dotnet publish --configuration Release
+
+*copy files
+sudo cp -rf bin/Release/net5.0/publish/* /var/www/testdotnet/public
+sudo -s cp -rf bin/Release/net5.0/publish/* /var/www/testdotnet/public
+
+* check
+ls /var/www/testdotnet/public
+
+
+-------------------------------------
+
+5. configure
+* config
+sudo nano /etc/apache2/sites-available/testdotnet.conf
+sudo -s nano /etc/apache2/sites-available/testdotnet.conf
+
+<VirtualHost *:8081>
+    ServerAdmin ilmudata@localhost
+    ServerName testbed02
+    ServerAlias testbed02.southeastasia.cloudapp.azure.com
+
+    ProxyPreserveHost On  
+    ProxyPass / http://localhost:5000/ 
+    ProxyPassReverse / http://localhost:5000/  
+    RewriteEngine on  
+    RewriteCond %{HTTP:UPGRADE} ^WebSocket$ [NC]  
+    RewriteCond %{HTTP:CONNECTION} Upgrade$ [NC]  
+    RewriteRule /(.*) ws://127.0.0.1:5000/$1 [P]  
+
+    ErrorLog /var/www/testdotnet/log/error.log
+    CustomLog /var/www/testdotnet/log/access.log combined
+</VirtualHost>
+
+-----
+sudo a2ensite testdotnet.conf
+sudo -s a2ensite testdotnet.conf
+
+sudo apachectl configtest
+
+
+sudo -s nano /etc/apache2/ports.conf 
+------
+Listen 8081
+--------------------
+
+sudo systemctl restart apache2
+
+-------------------------------------
+6. Creating service
+
+sudo nano /etc/systemd/system/dotnetservicefile.service
+sudo -s nano /etc/systemd/system/dotnetservicefile.service
+
++++++++++++++++++++++++++++++++++++++++
+[Unit]
+Description=Running ASP.NET Core 5.0 on Ubuntu 20.04 Webserver APACHE
+
+[Service]
+WorkingDirectory=/var/www/testdotnet/public
+ExecStart=/usr/bin/dotnet /var/www/testdotnet/public/myapp.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dotnet-example
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+[Install]
+WantedBy=multi-user.target
+++++++++++++++++++++++++++++++++++++++++++++++
+
+sudo systemctl enable dotnetservicefile.service
+
+
+sudo systemctl start dotnetservicefile.service
+
+test
+http://testbed02.southeastasia.cloudapp.azure.com:8081
+
+please make a port-8081 opening on your ubuntu server (and cloud service if you use it)

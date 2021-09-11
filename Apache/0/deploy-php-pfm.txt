@@ -1,0 +1,18 @@
+Installing and Configuring PHP-FPM for Apache HTTP Server
+-----------------------------------
+
+sudo apt install php php-fpm
+sudo -s apt install php php-fpm
+
+sudo a2enmod actions fcgid alias proxy_fcgi
+
+sudo nano /etc/apache2/sites-available/testbed.conf
+sudo -s nano /etc/apache2/sites-available/testbed.conf
+
+**set these scripts on the below
+<FilesMatch \.php$>
+    SetHandler "proxy:unix:/var/run/php/php7.4-fpm.sock|fcgi://localhost"
+</FilesMatch>
+
+sudo systemctl restart apache2	
+sudo systemctl status apache2	

@@ -1,0 +1,52 @@
+==================================
+1. Install and Configure Apache HTTP Server
+==================================
+
+** 1. Apache
+* update 
+sudo -s apt-get update
+sudo apt-get update
+
+* install apache
+sudo apt install apache2
+sudo -s apt install apache2
+
+* check
+apache2 -v
+
+**2. Firewall
+sudo ufw app list
+sudo -s ufw app list
+
+* set firewall
+sudo ufw allow 'Apache Full'
+sudo -s ufw allow 'Apache Full'
+
+* check status
+sudo ufw status
+sudo -s ufw status
+
+* check status
+sudo systemctl status apache2
+sudo -s systemctl status apache2
+
+* if it's inactive status
+sudo ufw enable
+sudo -s ufw enable
+
+sudo -s ufw disable
+
+
+** managing apache services
+sudo systemctl start apache2
+sudo -s systemctl start apache2
+
+sudo systemctl stop apache2
+sudo -s systemctl stop apache2
+
+sudo systemctl restart apache2
+sudo -s systemctl restart apache2
+
+* enable boot
+sudo systemctl enable apache2
+sudo -s systemctl enable apache2

@@ -1,0 +1,20 @@
+** install PHP
+sudo apt update
+sudo apt install php libapache2-mod-php
+sudo -s apt install php libapache2-mod-php
+
+** restart
+sudo systemctl restart apache2
+
+* create php
+sudo nano /var/www/testbed/public/testphp.php
+sudo -s nano /var/www/testbed/public/testphp.php
+
+<?php
+phpinfo();
+
+** change index order
+sudo nano /etc/apache2/mods-enabled/dir.conf
+sudo -s nano /etc/apache2/mods-enabled/dir.conf
+
+------------------------------
