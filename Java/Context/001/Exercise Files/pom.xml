@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.readlearncode</groupId>
+    <artifactId>context-and-dependency-injection-cdi-with-java</artifactId>
+    <version>1.0</version>
+
+    <name>context-and-dependency-injection-cdi-with-java</name>
+    <url>www.readlearncode.com</url>
+
+    <modules>
+        <module>master</module>
+        <module>01_01_start</module>
+        <module>01_01_end</module>
+        <module>01_02_start</module>
+        <module>01_02_end</module>
+        <module>03_01_start</module>
+        <module>03_01_end</module>
+        <module>03_02_start</module>
+        <module>03_02_end</module>
+        <module>03_03_start</module>
+        <module>03_03_end</module>
+        <module>03_05_start</module>
+        <module>03_05_solution</module>
+
+        <module>04_01_start</module>
+        <module>04_02_start</module>
+        <module>04_02_end</module>
+        <module>04_03_end</module>
+        <module>04_03_start</module>
+        <module>04_04_start</module>
+
+        <module>05_02_start</module>
+        <module>05_02_end</module>
+        <module>05_03_start</module>
+        <module>05_03_end</module>
+        <module>05_05_start</module>
+        <module>05_05_solutions</module>
+        <module>06_02_start</module>
+        <module>06_02_end</module>
+        <module>06_03_start</module>
+        <module>06_03_end</module>
+        <module>06_05_start</module>
+        <module>06_05_solution</module>
+        <module>07_02_start</module>
+        <module>07_02_end</module>
+        <module>07_01_start</module>
+        <module>07_01_end</module>
+        <module>08_02_end</module>
+        <module>08_02_start</module>
+        <module>09_02_start</module>
+        <module>04_02_end</module>
+
+
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <javaee-api.version>8.0</javaee-api.version>
+        <weld-se-core.version>3.0.2.Final</weld-se-core.version>
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
+        <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
+        <version.log4j>2.8.2</version.log4j>
+        <weld-se-shaded.version>3.0.0.Final</weld-se-shaded.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-shaded</artifactId>
+            <version>${weld-se-shaded.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <version>${weld-se-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${version.log4j}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>context-and-dependency-injection-cdi-with-java</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${maven-compiler-plugin.source}</source>
+                    <target>${maven-compiler-plugin.source}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
